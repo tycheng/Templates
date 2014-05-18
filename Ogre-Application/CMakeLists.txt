@@ -39,7 +39,7 @@ if(UNIX)
 
 	else ()
 	  message(SEND_ERROR "Failed to find module path.")
-	endif(EXISTS "/usr/local/lib/OGRE")
+	endif()
 
     #######################################################################
     #                add ogre libraries here for ogre 1.9                 #
@@ -115,15 +115,16 @@ set(SRCS
 #######################################################################
 include_directories( ${OIS_INCLUDE_DIRS}
 	${OGRE_INCLUDE_DIRS}
-    "/usr/include/OGRE/Overlay"
 	${OGRE_SAMPLES_INCLUDEPATH}
+    "/usr/include/OGRE/Overlay"
 )
 
 add_executable(OgreApp WIN32 ${HDRS} ${SRCS})
 
 set_target_properties(OgreApp PROPERTIES DEBUG_POSTFIX _d)
 
-target_link_libraries(OgreApp ${OGRE_LIBRARIES} ${OIS_LIBRARIES} ${OGRE_SUBLIBRARIES})
+set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${OGRE_SUBLIBRARIES})
+target_link_libraries(OgreApp ${OGRE_LIBRARIES} ${OIS_LIBRARIES})
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/dist/bin)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/dist/media)
