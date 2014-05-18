@@ -100,23 +100,45 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
 	set(OGRE_LIBRARIES ${OGRE_LIBRARIES} ${Boost_LIBRARIES})
 endif()
 
-set(HDRS
-	./BaseApplication.h
-	./TutorialApplication.h
+file(GLOB HDRS 
+    src/*.h 
+    src/*.hpp
 )
 
-set(SRCS
-	./BaseApplication.cpp
-	./TutorialApplication.cpp
+file(GLOB SRCS 
+    src/*.cxx
+    src/*.cpp    
 )
+
+# set(HDRS
+# 	./BaseApplication.h
+# 	./TutorialApplication.h
+# )
+#
+# set(SRCS
+# 	./BaseApplication.cpp
+# 	./TutorialApplication.cpp
+# )
 
 #######################################################################
 #                 add ogre headers here for ogre 1.9                  #
 #######################################################################
+set(EXTRA_INCLUDE_DIRS 
+    "/usr/include/OGRE/GLX"
+    "/usr/include/OGRE/Overlay"
+    "/usr/include/OGRE/Paging"
+    "/usr/include/OGRE/Property"
+    "/usr/include/OGRE/Plugins"
+    "/usr/include/OGRE/RenderSystems"
+    "/usr/include/OGRE/Terrain"
+    "/usr/include/OGRE/Threading"
+    "/usr/include/OGRE/Volume"
+)
+
 include_directories( ${OIS_INCLUDE_DIRS}
 	${OGRE_INCLUDE_DIRS}
 	${OGRE_SAMPLES_INCLUDEPATH}
-    "/usr/include/OGRE/Overlay"
+    ${EXTRA_INCLUDE_DIRS} 
 )
 
 add_executable(OgreApp WIN32 ${HDRS} ${SRCS})
