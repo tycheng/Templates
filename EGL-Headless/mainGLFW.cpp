@@ -141,25 +141,10 @@ static void render(GLFWwindow* window, Camera& camera, Scene& scene)
 
     CHECK_GL_ERROR(glUseProgram(shaderProgram));
     scene.render(shaderProgram, camera, globalXform);
+    CHECK_GL_ERROR(glFlush());
     CHECK_GL_ERROR(glUseProgram(0));
 
-    // glBegin(GL_TRIANGLES);
-    // for (auto mesh : scene.getMeshes()) {
-    //     std::vector<Vertex>& vertices = mesh->getVertices();
-    //     std::vector<uint32_t>& indices = mesh->getIndices();
-    //     for (size_t i = 0; i < indices.size(); i++) {
-    //         glm::vec3 pos = vertices[i].position;
-    //         glm::vec3 col = vertices[i].position;
-    //         glColor3f(col.r, col.g, col.b);
-    //         glVertex3f(pos.x, pos.y, pos.z);
-    //     }
-    // }
-    // glEnd();
-
-    CHECK_GL_ERROR(glFlush());
-
     glfwSwapBuffers(window);
-
 }
 
 int main(int argc, const char* argv[])
