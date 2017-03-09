@@ -1,0 +1,28 @@
+M ./models/fighter.dae
+C 0 0
+F ./test/fighter-front.bin
+C 90 0
+F ./test/fighter-left.bin
+C 180 0
+F ./test/fighter-back.bin
+C -90 0
+F ./test/fighter-right.bin
+C 0 -90
+C 0 90
+F ./test/fighter-top.bin
+C 0 -90
+F ./test/fighter-bottom.bin
+M ./models/skateboard.dae
+C 0 0
+Fa ./test/skateboard-front.bin
+C 90 0
+Fa ./test/skateboard-left.bin
+C 180 0
+Fa ./test/skateboard-back.bin
+C -90 0
+Fa ./test/skateboard-right.bin
+C 0 90
+Fa ./test/skateboard-top.bin
+C 0 -90
+Fa ./test/skateboard-bottom.bin
+X

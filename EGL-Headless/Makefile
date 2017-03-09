@@ -2,7 +2,7 @@ CC=g++
 CXXFLAGS=-std=c++14 -Wall -O0 -ggdb3
 EGL_LIBS=-lEGL -lGL
 GL_LIBS=-lGL -lGLU -lGLEW
-GLFW_LIBS=$(shell pkg-config --static --libs x11 xrandr xi xxf86vm glew glfw3)
+GLFW_LIBS=$(shell pkg-config --libs glew glfw3)
 LIBS=-lassimp -lGLEW -lpthread
 INCS=-I/usr/include -Ilib
 

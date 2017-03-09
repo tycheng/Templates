@@ -53,18 +53,15 @@ Mesh::render(GLuint program, Camera& camera, glm::mat4 globalXform) {
 
     offset = (void*) offsetof(Vertex, position);
     CHECK_GL_ERROR(glEnableVertexAttribArray(0));
-    CHECK_GL_ERROR(glEnableClientState(GL_VERTEX_ARRAY));
     CHECK_GL_ERROR(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), offset));  // vertex position
 
     offset = (void*) offsetof(Vertex, color);
-    CHECK_GL_ERROR(glEnableClientState(GL_COLOR_ARRAY));
-    CHECK_GL_ERROR(glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), offset));  // vertex color
     CHECK_GL_ERROR(glEnableVertexAttribArray(1));
+    CHECK_GL_ERROR(glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), offset));  // vertex color
 
-    CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, indices.data()));
-
-    CHECK_GL_ERROR(glDisableClientState(GL_VERTEX_ARRAY));
-    CHECK_GL_ERROR(glDisableClientState(GL_COLOR_ARRAY));
+    // CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, indices.data()));
+    CHECK_GL_ERROR(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+    CHECK_GL_ERROR(glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0));
 
     CHECK_GL_ERROR(glDisableVertexAttribArray(0));
     CHECK_GL_ERROR(glDisableVertexAttribArray(1));
@@ -79,7 +76,7 @@ Mesh::init() {
     CHECK_GL_ERROR(glBindBuffer(GL_ARRAY_BUFFER, vbo));
     CHECK_GL_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_STATIC_DRAW));
 
-    // CHECK_GL_ERROR(glGenBuffers(1, &ibo));
-    // CHECK_GL_ERROR(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
-    // CHECK_GL_ERROR(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * indices.size(), indices.data(), GL_STATIC_DRAW));
+    CHECK_GL_ERROR(glGenBuffers(1, &ibo));
+    CHECK_GL_ERROR(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+    CHECK_GL_ERROR(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * indices.size(), indices.data(), GL_STATIC_DRAW));
 }

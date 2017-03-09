@@ -69,29 +69,29 @@ static GLuint vertShader;
 static GLuint fragShader;
 
 static const char* vertShaderSrc =
-    "#version 450"
-    "\nuniform mat4 model;"
-    "\nuniform mat4 view;"
-    "\nuniform mat4 proj;"
-    "\nlayout(location = 0) in vec3 inPosition;"
-    "\nlayout(location = 1) in vec3 inColor;"
-    "\nout vec3 fragColor;"
-    "\nout gl_PerVertex {"
-    "\n    vec4 gl_Position;"
-    "\n};"
+    "#version 300 es"
+    "\n"
+    "\nuniform highp mat4 model;"
+    "\nuniform highp mat4 view;"
+    "\nuniform highp mat4 proj;"
+    "\nlayout(location = 0) in highp vec3 inPosition;"
+    "\nlayout(location = 1) in highp vec3 inColor;"
+    "\nout highp vec3 fragColor;"
     "\nvoid main() {"
     "\n    gl_Position = proj * view * model * vec4(inPosition, 1.0);"
     "\n    fragColor = inColor;"
     "\n}";
 
 static const char* fragShaderSrc =
-    "#version 450"
-    "\nin vec3 fragColor;"
-    "\nout vec4 outColor;"
-    "\nconst float far = 20.0;"
-    "\nconst float near = 1.0;"
+    "#version 300 es"
+    "\n"
+    "\nuniform highp mat4 model;"
+    "\nin highp vec3 fragColor;"
+    "\nout highp vec4 outColor;"
+    "\nconst highp float far = 20.0;"
+    "\nconst highp float near = 1.0;"
     "\nvoid main() {"
-    "\n    float z = (1.0 / gl_FragCoord.w - near) / (far - near);"
+    "\n    highp float z = (1.0 / gl_FragCoord.w - near) / (far - near);"
     "\n    outColor = vec4(z, z, z, 1.0);"
     "\n}";
 

@@ -3,14 +3,14 @@
 
 #include <iostream>
 #include <string>
+#include <memory>
 
-#define cimg_display 0
-#include "lib/CImg.h"
 #include "lib/quickgl.h"
 #include "lib/scene.h"
 #include "lib/camera.h"
 #include "lib/bbox.h"
 #include "common.h"
+#include <limits>
 
 static const EGLint configAttribs[] = {
     EGL_SURFACE_TYPE, EGL_PBUFFER_BIT,
@@ -43,28 +43,25 @@ static GLuint vertShader;
 static GLuint fragShader;
 
 static const char* vertShaderSrc =
-    "#version 450"
-    "\nuniform mat4 model;"
-    "\nuniform mat4 view;"
-    "\nuniform mat4 proj;"
-    "\nlayout(location = 0) in vec3 inPosition;"
-    "\nlayout(location = 1) in vec3 inColor;"
-    "\nout vec3 fragColor;"
-    "\nout gl_PerVertex {"
-    "\n    vec4 gl_Position;"
-    "\n};"
+    "#version 300 es"
+    "\nuniform highp mat4 model;"
+    "\nuniform highp mat4 view;"
+    "\nuniform highp mat4 proj;"
+    "\nlayout(location = 0) in highp vec3 inPosition;"
+    "\nlayout(location = 1) in highp vec3 inColor;"
+    "\nout highp vec3 fragColor;"
     "\nvoid main() {"
     "\n    gl_Position = proj * view * model * vec4(inPosition, 1.0);"
     "\n    fragColor = inColor;"
     "\n}";
 
 static const char* fragShaderSrc =
-    "#version 450"
-    "\nin vec3 fragColor;"
+    "#version 300 es"
+    "\nin highp vec3 fragColor;"
     // "\nlayout(location=0, component=1) out float outColor;"
-    "\nout vec4 outColor;"
-    "\nconst float far = 20.0;"
-    "\nconst float near = 1.0;"
+    "\nout highp vec4 outColor;"
+    "\nconst highp float far = 20.0;"
+    "\nconst highp float near = 1.0;"
     "\nvoid main() {"
     "\n    gl_FragDepth = (1.0 / gl_FragCoord.w - near) / (far - near);"
     "\n    float z = gl_FragDepth;"
@@ -121,24 +118,15 @@ void setup() {
     }
 }
 
-void save(std::string filename) {
-    // -------------------------------------------------------------------------
+void save(std::ostream& fout) {
     std::vector<float> pixels(pbufferWidth * pbufferHeight * sizeof(float));
     CHECK_GL_ERROR(glReadPixels(0, 0, pbufferWidth, pbufferHeight, GL_RED, GL_FLOAT,  pixels.data()));
 
-    cimg_library::CImg<float> img(pbufferHeight, pbufferWidth);
-    for (int r = 0; r < pbufferHeight; r++) {
-        for (int c = 0; c < pbufferWidth; c++) {
-            float color[] = {
-                255 * pixels[r * pbufferWidth + c],
-                255 * pixels[r * pbufferWidth + c],
-                255 * pixels[r * pbufferWidth + c]
-            };
-            img.draw_point(c, pbufferHeight - 1 - r, color);        // flip for OpenGL framebuffer
-        }
+    const float *base = pixels.data();
+    for (int i = 0; i < pbufferWidth; i++) {
+	    fout.write(reinterpret_cast<const char*>(base), sizeof(float) * pbufferWidth);
+	    base += pbufferWidth;
     }
-    img.normalize(0.0, 255.0);
-    img.save(filename.c_str());
 }
 
 void render(Camera& camera, Scene& scene) {
@@ -167,6 +155,26 @@ void clean() {
     CHECK_GL_ERROR(glDeleteProgram(shaderProgram));
 }
 
+void gen_depth_image(Scene& scene,
+		Camera& camera,
+		float scale,
+		glm::vec2 rotation,
+		const std::string& outputFile,
+		std::ios_base::openmode mode)
+{
+	std::cerr << "Rendering to " << outputFile << std::endl;
+	scene.resetTransform();
+	scene.rotate(rotation.x, 0, 1, 0);              // longiture
+	scene.rotate(rotation.y, 1, 0, 0);              // latitude
+	scene.scale(scale, scale, scale);
+	scene.moveToCenter();
+
+	render(camera, scene);
+	std::ofstream fout;
+	fout.open(outputFile, mode);
+	save(fout);
+}
+
 int main(int argc, char *argv[])
 {
     if (argc < 2) {
@@ -177,8 +185,11 @@ int main(int argc, char *argv[])
 #endif
         exit(EXIT_FAILURE);
     }
-    std::vector<Config> configs;
-    parse_config(std::string(argv[1]), configs);
+    std::ifstream cfgin(argv[1]);
+    if (!cfgin.is_open()) {
+        std::cerr << "Cannot open file: " << argv[1] << std::endl;
+	return -1;
+    }
 
     // 1. Initialize EGL
     EGLDisplay eglDpy = eglGetDisplay(EGL_DEFAULT_DISPLAY);
@@ -223,31 +234,60 @@ int main(int argc, char *argv[])
         20.0f                                                   // far plane
     );
 
-    // --------------------------------------------------------------
-    for (auto config : configs) {
-        Scene scene;
-        scene.load(config.inputFile);
-        BoundingBox bbox = scene.getBoundingBox();
-        float scaleX = (eyeDist - minDist - bbox.front) / (bbox.right - bbox.left);
-        float scaleY = (eyeDist - minDist - bbox.front) / (bbox.top - bbox.bottom);
-        float scaleZ = (eyeDist - minDist - bbox.front) / (bbox.front - bbox.back);
-        float scale = std::min(std::min(scaleX, scaleY), scaleZ);
+    std::unique_ptr<Scene> scene;
+    std::string str;
+    glm::vec2 rotation;
+    float longitude, latitude;
+    float scale;
+    bool end = false;
 
-        for (size_t i = 0; i < config.outputFiles.size(); i++) {
-            glm::vec2 rotation = config.rotations[i];
-            std::string outputFile = config.outputFiles[i];
+    while (!cfgin.eof() && !end) {
+	    char c;
+	    cfgin >> c;
+	    switch (c) {
+		    case 'M':
+			    cfgin >> str;
+			    scene.reset(new Scene);
+			    scene->load(str);
+			    {
+				    BoundingBox bbox = scene->getBoundingBox();
+				    float scaleX = (eyeDist - minDist - bbox.front) /
 
-            scene.resetTransform();
-            scene.rotate(rotation.x, 0, 1, 0);              // longiture
-            scene.rotate(rotation.y, 1, 0, 0);              // latitude
-            scene.scale(scale, scale, scale);
-            scene.moveToCenter();
-
-            render(camera, scene);
-            save(outputFile);
-
-            CHECK_GL_ERROR(eglSwapBuffers(eglDpy, eglSurf));
-        }
+					    (bbox.right - bbox.left);
+				    float scaleY = (eyeDist - minDist - bbox.front) /
+					    (bbox.top - bbox.bottom);
+				    float scaleZ = (eyeDist - minDist - bbox.front) /
+					    (bbox.front - bbox.back);
+				    scale = std::min(std::min(scaleX, scaleY), scaleZ);
+			    }
+			    break;
+		    case 'C':
+			    cfgin >> longitude >> latitude;
+			    longitude = glm::radians(longitude);
+			    latitude = glm::radians(latitude);
+			    rotation = { longitude, latitude };
+			    break;
+		    case 'F':
+			    {
+				    cfgin.get(c);
+				    auto mode = std::ios_base::in | std::ios_base::binary;
+				    if (c == 'a') // support command Fa
+					    mode |= std::ios_base::app;
+				    cfgin >> str;
+				    gen_depth_image(*scene, camera, scale, rotation, str, mode);
+				    CHECK_GL_ERROR(eglSwapBuffers(eglDpy, eglSurf));
+			    }
+			    break;
+		    case 'X':
+			    end = true;
+			    break;
+		    default:
+			    if (!cfgin.eof())
+				    std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+			    else
+				    end = true;
+			    break;
+	    }
     }
     clean();
 
