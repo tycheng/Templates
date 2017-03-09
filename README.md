@@ -3,8 +3,13 @@ Templates
 
 This is a collection of templates.
 
-Current Templates
+Graphics Templates
 -----------------
 * GLUT
 * GLFW
 * EGL-Headless
+
+LaTex Templates
+----------------
+* Resume
+* Presentation

@@ -1,0 +1,264 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Deedy - One Page Two Column Resume
+% LaTeX Template
+% Version 1.1 (30/4/2014)
+%
+% Original author:
+% Debarghya Das (http://debarghyadas.com)
+%
+% Original repository:
+% https://github.com/deedydas/Deedy-Resume
+%
+% IMPORTANT: THIS TEMPLATE NEEDS TO BE COMPILED WITH XeLaTeX
+%
+% This template uses several fonts not included with Windows/Linux by
+% default. If you get compilation errors saying a font is missing, find the line
+% on which the font is used and either change it to a font included with your
+% operating system or comment the line out to use the default font.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% TODO:
+% 1. Integrate biber/bibtex for article citation under publications.
+% 2. Figure out a smoother way for the document to flow onto the next page.
+% 3. Add styling information for a "Projects/Hacks" section.
+% 4. Add location/address information
+% 5. Merge OpenFont and MacFonts as a single sty with options.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% CHANGELOG:
+% v1.1:
+% 1. Fixed several compilation bugs with \renewcommand
+% 2. Got Open-source fonts (Windows/Linux support)
+% 3. Added Last Updated
+% 4. Move Title styling into .sty
+% 5. Commented .sty file.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Known Issues:
+% 1. Overflows onto second page if any column's contents are more than the
+% vertical limit
+% 2. Hacky space on the first bullet point on the second column.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[]{deedy-resume-openfont} 
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     LAST UPDATED DATE
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \lastupdated
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     TITLE NAME
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\namesection{}{Tianyu Cheng}{ \urlstyle{same}\url{http://tycheng.github.io} \\
+\href{mailto:tianyu.cheng@utexas.edu}{tianyu.cheng@utexas.edu} | Phone (512).517.1107
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     COLUMN ONE
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{minipage}[t]{0.33\textwidth} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     EDUCATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Education} 
+
+\subsection{University of Texas}
+
+\vspace{\topsep} % Hacky fix for awkward extra vertical space
+
+\descript{M.S. in Computer Science}
+\location{May 2017 | Austin, TX}
+College of Natural Science \\
+Five Years BS/MS Integrated Program \\
+\location{Major GPA: 3.75 / 4.0}
+\sectionsep
+
+\descript{B.S. in Computer Science}
+\location{May 2016 | Austin, TX}
+College of Natural Science \\
+Turing Scholars Program \\
+\location{Major GPA: 3.95 / 4.0}
+\sectionsep
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     COURSEWORK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Courses}
+
+\subsection{Undergraduate}
+Operating System \\
+Algorithm \& Complexity \\
+Artificial Intelligence \\
+Programming Languages \\
+Computer Vision/Machine Learning \\
+Data Mining \\
+Network \& Privacy \\
+
+\sectionsep
+
+\subsection{Graduate}
+Compiler \\
+Computer Graphics \\
+Autonomous Robots \\
+Software Design \\
+Advanced Operating System \\
+Numerical Linear Algebra \\
+
+\sectionsep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     SKILLS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Skills}
+\subsection{Languages}
+\begin{tabular}{ll}
+\skillbar{C/C++\hspace{1.5em}}{0.7}
+\skillbar{Java}{0.8}
+\skillbar{Python}{0.8}
+\end{tabular}
+
+\sectionsep
+
+\subsection{Interests}
+\begin{tabular}{ll}
+\skillbar{Graphics}{0.9}
+\skillbar{System}{0.5}
+\skillbar{Compiler}{0.4}
+\skillbar{Web}{0.6}
+\end{tabular}
+
+\sectionsep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     LINKS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Links} 
+Github: \href{https://github.com/tycheng}{\custombold{tycheng}} \\
+LinkedIn: \href{www.linkedin.com/pub/tianyu-cheng/66/335/834/}{\custombold{tianyu-cheng}} \\
+Homepage: \href{http://tycheng.github.io}{\custombold{tycheng.github.io}} \\
+
+\sectionsep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     COLUMN TWO
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{minipage} 
+\hfill
+\begin{minipage}[t]{0.66\textwidth} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     EXPERIENCE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Experience}
+
+\runsubsection{Apple}
+\descript{| GPU Validation Team }
+\location{May 2016 – August 2016 | Austin, TX}
+\vspace{\topsep} % Hacky fix for awkward extra vertical space
+\begin{tightemize} 
+\item developed an internal web front-end tool for performance visualization
+\item implemented and validated counters in performance model
+\item worked on numerics validation for GPU driver
+\end{tightemize}
+\sectionsep
+
+\runsubsection{Apple}
+\descript{| GPU Validation Team }
+\location{May 2015 – August 2015 | Austin, TX}
+% \vspace{\topsep} % Hacky fix for awkward extra vertical space
+\begin{tightemize} 
+\item developed an internal server-side tool with Ruby on Rails for test automation
+\item developed a web front-end data analysis tool for data visualization
+\item worked on numerics validation for GPU driver
+\end{tightemize}
+\sectionsep
+
+\runsubsection{Digital Media Institute}
+\descript{| Student Technician }
+\location{June 2014 – December 2014 | Austin, TX}
+% \vspace{\topsep} % Hacky fix for awkward extra vertical space
+\begin{tightemize} 
+\item back-end design and implementation for an educational game in Unity
+\item developed several third-party tools to facilitate game development
+\end{tightemize}
+\sectionsep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     Projects
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Projects}
+
+\runsubsection{Planet Render}
+\descript{| Computer Graphics }
+\begin{tightemize} 
+\item a procedural terrain rendering program in OpenGL/GLSL
+\item procedural terrain generation based on Perlin noise
+\item LoD (level-of-detail) terrain/ocean rendering with CDLOD (continuous-distance LoD)
+\end{tightemize}
+\sectionsep
+
+\runsubsection{Ray Tracer}
+\descript{| Computer Graphics }
+\begin{tightemize} 
+\item a multithreaded ray tracer based on Whitted model
+\item used KD-tree and SAH for ray-object intersection optimization
+\item supports glossiness and depth of field using distribution ray tracing
+\end{tightemize}
+\sectionsep
+
+\runsubsection{3D Animator}
+\descript{| Computer Graphics Animation}
+\begin{tightemize} 
+\item a simple 3D animator for 3D format PMD/PMX
+\item implemented using OpenGL/GLSL for model rendering
+\item supports FK (forward kinematics) and simple IK (inverse kinematics)
+\end{tightemize}
+\sectionsep
+
+\runsubsection{Latte Compiler}
+\descript{| Deep Neural Network, Source-to-Source }
+\begin{tightemize} 
+\item a source-to-source compiler for deep neural network in Python-style descriptive language
+\item AST pattern match for parsing deep neural network architecture
+\item loop structure optimization with Intel MKL(BLAS) library
+\item data structure transformation for cache optimization
+\end{tightemize}
+\sectionsep
+
+\runsubsection{GameL}
+\descript{| Scala DSL }
+\begin{tightemize} 
+\item a game scripting DSL(domain-specific language) using Scala and Swing
+\item designed and implemented a set of syntax for basic game object creation and manipulation
+\item implemented a demo of the classical game Snake using GameL
+\end{tightemize}
+\sectionsep
+
+\end{minipage} 
+\end{document}  \documentclass[]{article}

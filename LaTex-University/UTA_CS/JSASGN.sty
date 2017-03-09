@@ -1,0 +1,75 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% THIS FILE IS MY SELF-DESIGNED LATEX TEMPLATE FOR ASSIGNMENT,
+%%% CALLED JIMMY STYLE FOR ASSIGNMENT, ABBREVIATED AS JSAsgn.
+%%%
+%%% COPYRIGHT (C) JIMMY LIN, 2012, UT AUSTIN 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% GENERAL FILE INFORMATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\AUTHOR}{Jimmy Lin}
+\newcommand{\UID}{xl5224}
+\newcommand{\UNIVERSITY}{The University of Texas at Austin}
+\newcommand{\COLLEGE}{Department of Computer Science}
+\newcommand{\COURSE}{ TBA }
+\newcommand{\LECTURER}{ TBA }
+\newcommand{\TUTOR}{ TBA }
+\newcommand{\TASK}{ TBA }
+\newcommand{\RELEASEDATE}{ TBA }
+\newcommand{\DUEDATE}{ TBA }
+\newcommand{\TIMECONSUME}{ TBA }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% GENERAL TEXING STYLE FORMAT & PREFERENCE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\geometry{top=18mm,bottom=18mm,left=20mm,right=20mm}
+\pagestyle{fancyplain}
+\lhead{\COURSE}
+\rhead{\TASK}  
+\lfoot{\copyright \AUTHOR (\UID)}
+\rfoot{\UNIVERSITY}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% GENERAL TEXING ENVIROMENT MACROS: TITLE PAGE DECORATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\maketitle}{
+    \begin{center}
+ \vspace*{0.3cm}
+\includegraphics[width=0.22\textwidth]{/Users/JimmyLin/Pictures/Latex/UTA/0.png}
+%\includegraphics[width=0.3\textwidth]{/Users/JimmyLin/Pictures/Latex/UTA/2.jpeg}
+%\includegraphics[width=0.12\textwidth]{/Users/JimmyLin/Pictures/Latex/UTA/0.png}
+\\[0.5cm]
+\textsc{\LARGE \parbox{8cm}{\centering \UNIVERSITY}}
+\\[1.2cm]
+
+\rule{\linewidth}{0.5mm} \\[0.4cm]
+{ \textsc{\Large \COURSE}\\[0.5cm]
+ \huge \bfseries \TASK}\\[0.4cm]
+ \footnotesize Edited by \LaTeX \\[0.25cm]
+ \normalsize{\COLLEGE}
+\rule{\linewidth}{0.5mm} \\[1.5cm]
+
+\begin{center}
+     {\large \fbox{STUDENT}}  \\
+\Large \textbf{\AUTHOR} \\ \UID \vspace*{0.6cm}
+
+ {\large \fbox{INSTRUCTOR}}  \\
+\Large \textbf{\LECTURER} \vspace*{0.6cm}
+
+ {\large \fbox{TASSISTANT}}  \\
+\Large \textbf{\TUTOR} \vspace*{0.6cm}
+
+{\large \fbox{RELEASE DATE}} \\
+\Large \textbf{\RELEASEDATE} \vspace*{0.6cm} 
+
+{\large \fbox{DUE DATE}} \\
+\Large \textbf{\DUEDATE} \vspace*{0.6cm}
+
+ {\large \fbox{TIME SPENT}} \\
+\Large \textbf{\TIMECONSUME} \vspace*{0.6cm} 
+\end{center}
+% foot
+\vfill
+{\large \today}
+\end{center}
+}
+
