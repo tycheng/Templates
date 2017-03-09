@@ -7,3 +7,4 @@ Current Templates
 -----------------
 * GLUT
 * GLFW
+* EGL-Headless
