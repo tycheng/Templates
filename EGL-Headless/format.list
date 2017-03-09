@@ -1,0 +1,26 @@
+M ./models/fighter.dae
+C 0 0
+F ./fighter-front.tiff
+C 90 0
+F ./fighter-left.tiff
+C 180 0
+F ./fighter-back.tiff
+C -90 0
+F ./fighter-right.tiff
+C 0 90
+F ./fighter-top.tiff
+C 0 -90
+F ./fighter-bottom.tiff
+M ./models/skateboard.dae
+C 0 0
+F ./skateboard-front.tiff
+C 90 0
+F ./skateboard-left.tiff
+C 180 0
+F ./skateboard-back.tiff
+C -90 0
+F ./skateboard-right.tiff
+C 0 90
+F ./skateboard-top.tiff
+C 0 -90
+F ./skateboard-bottom.tiff
